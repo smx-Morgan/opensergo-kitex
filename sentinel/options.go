@@ -18,6 +18,7 @@ package sentinel
 
 import (
 	"context"
+
 	"github.com/cloudwego-contrib/cwgo-pkg/opensergo/sentinel/kxadapter"
 )
 
