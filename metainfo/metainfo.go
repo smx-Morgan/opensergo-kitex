@@ -25,10 +25,10 @@ type OpenSergoMetaReporter = metainfo.OpenSergoMetaReporter
 
 // NewDefaultMetaReporter create a default meta info reporter
 func NewDefaultMetaReporter() (*OpenSergoMetaReporter, error) {
-	return NewDefaultMetaReporter()
+	return metainfo.NewDefaultMetaReporter()
 }
 
 // NewMetaReporter create a meta info reporter
 func NewMetaReporter(c *util.OpenSergoConfig) (*OpenSergoMetaReporter, error) {
-	return NewMetaReporter(c)
+	return metainfo.NewMetaReporter(c)
 }

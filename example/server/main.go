@@ -45,7 +45,7 @@ func main() {
 		new(HelloImpl),
 	)
 	server.RegisterStartHook(func() {
-		if err = r.ReportMetaInfo(svr.GetServiceInfo()); err != nil {
+		if err = r.ReportMetaInfo(svr.GetServiceInfos()); err != nil {
 			klog.Error(err)
 		}
 	})
