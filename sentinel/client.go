@@ -17,10 +17,7 @@
 package sentinel
 
 import (
-	"context"
-
-	"github.com/alibaba/sentinel-golang/api"
-	"github.com/alibaba/sentinel-golang/core/base"
+	"github.com/cloudwego-contrib/cwgo-pkg/opensergo/sentinel/kxadapter"
 	"github.com/cloudwego/kitex/pkg/endpoint"
 )
 
@@ -29,24 +26,5 @@ import (
 // Default block fallback is returning blockError
 // Define your own behavior by setting serverOptions
 func SentinelClientMiddleware(opts ...Option) func(endpoint.Endpoint) endpoint.Endpoint {
-	options := newOptions(opts)
-	return func(next endpoint.Endpoint) endpoint.Endpoint {
-		return func(ctx context.Context, req, resp interface{}) error {
-			resourceName := options.ResourceExtract(ctx, req, resp)
-			entry, blockErr := api.Entry(
-				resourceName,
-				api.WithResourceType(base.ResTypeRPC),
-				api.WithTrafficType(base.Outbound),
-			)
-			if blockErr != nil {
-				return options.BlockFallback(ctx, req, resp, blockErr)
-			}
-			defer entry.Exit()
-			err := next(ctx, req, resp)
-			if err != nil {
-				api.TraceError(entry, err)
-			}
-			return err
-		}
-	}
+	return kxadapter.SentinelClientMiddleware(opts...)
 }
